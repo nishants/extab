@@ -1,0 +1,58 @@
+{
+  "links": [],
+  "resource": [
+    {
+      "id": 1,
+      "name": "ADSD-N",
+      "code": "ADSD-N",
+      "marketingOrgs": [
+        {
+          "id": "NACD"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "ADSD-S",
+      "code": "ADSD-S",
+      "marketingOrgs": [
+        {
+          "id": "CACO"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "PSNA",
+      "code": "PSNA",
+      "marketingOrgs": [
+        {
+          "id": "NADLR"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "APD",
+      "code": "APD",
+      "marketingOrgs": [
+        {
+          "id": "APD"
+        },
+        {
+          "id": "CAPL"
+        },
+        {
+          "id": "CCL"
+        },
+        {
+          "id": "CFEL"
+        },
+        {
+          "id": "COFA"
+        }
+      ]
+    },
+    {}
+  ]
+}
