@@ -20,7 +20,7 @@ import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class LibTest {
+public class EndToEndTest {
   private final String allStringsPersonFileXLS = "/data/Person.xls";
   private final String allStringsPersonSkipFileXLS = "/data/PersonSkips.xls";
   private final String allStringsPersonFileXLSX = "/data/Person.xlsx";
