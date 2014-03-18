@@ -8,6 +8,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface ExcelTable {
-  public int fromRow() default 0;
-  public int fromColumn()default 0;
+  public String name();
+  public String comments() default "";
+  public int skipRows() default 0;
+  public int skipColumns()default 0;
 }

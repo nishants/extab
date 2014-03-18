@@ -1,4 +1,4 @@
-package geeksaint.point;
+package geeksaint.extab;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

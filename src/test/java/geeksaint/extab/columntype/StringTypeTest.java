@@ -1,6 +1,6 @@
-package geeksaint.point.columntype;
+package geeksaint.extab.columntype;
 
-import geeksaint.point.ExcelColumnType;
+import geeksaint.extab.ExcelColumnType;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.junit.Rule;

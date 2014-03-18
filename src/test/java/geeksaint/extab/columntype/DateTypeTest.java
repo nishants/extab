@@ -1,7 +1,7 @@
-package geeksaint.point.columntype;
+package geeksaint.extab.columntype;
 
-import extab.spike.exceptions.InvalidDataException;
-import geeksaint.point.ExcelColumnType;
+import geeksaint.extab.exceptions.InvalidDataException;
+import geeksaint.extab.ExcelColumnType;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.junit.Rule;

@@ -1,6 +1,5 @@
-package geeksaint.point;
+package geeksaint.extab;
 
-import extab.spike.Employee;
 import org.junit.Test;
 
 import java.io.IOException;

@@ -1,7 +1,7 @@
-package geeksaint.point.columntype;
+package geeksaint.extab.columntype;
 
-import extab.spike.exceptions.InvalidDataException;
-import geeksaint.point.ExcelColumnType;
+import geeksaint.extab.exceptions.InvalidDataException;
+import geeksaint.extab.ExcelColumnType;
 import org.apache.poi.ss.usermodel.Cell;
 import org.junit.Rule;
 import org.junit.Test;
@@ -15,14 +15,14 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class DoubleTypeTest {
+public class LongTypeTest {
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
   @Test
   public void shouldThrowExceptionIfCellIsNul(){
     thrown.expect(IllegalArgumentException.class);
-    ExcelColumnType.DOUBLE.getCellValue(null,"");
+    ExcelColumnType.LONG.getCellValue(null,"");
   }
 
   @Test
@@ -32,14 +32,14 @@ public class DoubleTypeTest {
     when(cell.getCellType()).thenReturn(Cell.CELL_TYPE_ERROR);
 
     thrown.expect(UnsupportedOperationException.class);
-    ExcelColumnType.DOUBLE.getCellValue(cell, "");
+    ExcelColumnType.LONG.getCellValue(cell, "");
   }
 
   @Test
   public void shouldReturnNullIfCellTypeIsBlank(){
     Cell cell = mock(Cell.class);
     when(cell.getCellType()).thenReturn(Cell.CELL_TYPE_BLANK);
-    assertThat(ExcelColumnType.DOUBLE.getCellValue(cell, ""), is(nullValue()));
+    assertThat(ExcelColumnType.LONG.getCellValue(cell, ""), is(nullValue()));
   }
 
   @Test
@@ -47,9 +47,9 @@ public class DoubleTypeTest {
     Cell cell = mock(Cell.class);
 
     when(cell.getCellType()).thenReturn(Cell.CELL_TYPE_STRING);
-    when(cell.getStringCellValue()).thenReturn("983625.4354");
+    when(cell.getStringCellValue()).thenReturn("983625");
 
-    assertThat((Double) ExcelColumnType.DOUBLE.getCellValue(cell, ""), is(new Double(983625.4354)));
+    assertThat((Long) ExcelColumnType.LONG.getCellValue(cell, ""), is(new Long(983625)));
   }
 
   @Test
@@ -64,22 +64,22 @@ public class DoubleTypeTest {
   }
 
   @Test
-  public void shouldReadDoubleValuesFromNumericCell(){
+  public void shouldReadLongValuesFromNumericCell(){
     Cell cell = mock(Cell.class);
 
     when(cell.getCellType()).thenReturn(Cell.CELL_TYPE_NUMERIC);
-    when(cell.getNumericCellValue()).thenReturn(983625.3434);
+    when(cell.getNumericCellValue()).thenReturn(983625.0);
 
-    assertThat((Double) ExcelColumnType.DOUBLE.getCellValue(cell, ""), is(new Double(983625.3434)));
+    assertThat((Long) ExcelColumnType.LONG.getCellValue(cell, ""), is(new Long(983625)));
   }
 
   @Test
-  public void shouldKeepPrecision(){
+  public void shouldTruncateDecimalValuesIfNumericCellHasDecimalValue(){
     Cell cell = mock(Cell.class);
 
     when(cell.getCellType()).thenReturn(Cell.CELL_TYPE_NUMERIC);
-    when(cell.getNumericCellValue()).thenReturn(983625.000001);
+    when(cell.getNumericCellValue()).thenReturn(983625.2974);
 
-    assertThat((Double) ExcelColumnType.DOUBLE.getCellValue(cell, ""), is(new Double(983625.000001)));
+    assertThat((Long) ExcelColumnType.LONG.getCellValue(cell, ""), is(new Long(983625)));
   }
 }

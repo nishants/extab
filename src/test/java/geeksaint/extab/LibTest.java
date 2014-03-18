@@ -1,7 +1,5 @@
-package geeksaint.point;
+package geeksaint.extab;
 
-import extab.spike.ExcelColumn;
-import extab.spike.ExcelTable;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
