@@ -1,9 +1,13 @@
 package geeksaint.extab;
 
+import geeksaint.extab.exceptions.InvalidAnnotationTargetException;
+import geeksaint.extab.exceptions.InvalidTargetTypeException;
 import lombok.EqualsAndHashCode;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import lombok.Getter;
+import org.junit.rules.ExpectedException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +22,8 @@ public class ItemInstatiatorTest {
 
   private final Class targetClass = LineItem.class;
   private ItemInstatiator instatiator;
+  @Rule
+  public ExpectedException expectedException = ExpectedException.none();
 
   @ExcelTable(name="Item with setter")
   @EqualsAndHashCode
@@ -43,6 +49,10 @@ public class ItemInstatiatorTest {
     @Getter
     @RowNum
     private int rowNumberInSheet;
+  }
+
+  public class BadLineItem{
+    public BadLineItem(int i){}
   }
 
   @Before
@@ -91,5 +101,17 @@ public class ItemInstatiatorTest {
 
     assertThat(createdItem.getFieldOne(), is("some-value"));
     assertThat(createdItem.getRowNumberInSheet(), is(101));
+  }
+
+  @Test
+  public void shouldRaiseExcptionIfTheTargetTypeHasNoDefaultConstructor(){
+    List itemValues = new ArrayList();
+    itemValues.add(0, "some-value");
+
+    expectedException.expect(InvalidTargetTypeException.class);
+    expectedException.expectMessage("Please ensure the target class has public default constructor and is not abstract type");
+
+    new ItemInstatiator(BadLineItem.class).createItem(itemValues, 101);
+
   }
 }

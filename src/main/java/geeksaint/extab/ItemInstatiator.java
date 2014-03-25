@@ -1,5 +1,6 @@
 package geeksaint.extab;
 
+import geeksaint.extab.exceptions.InvalidTargetTypeException;
 import geeksaint.extab.exceptions.MethodInvocationException;
 
 import java.lang.reflect.AccessibleObject;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ItemInstatiator {
+  private static final String COULD_NOT_INSTANTIATE_MESSAGE = "Please ensure the target class has public default constructor and is not abstract type";
   private final AnnotationProcessor processor;
   private final Class targetClass;
   private final Field rowNumField;
@@ -81,9 +83,9 @@ public class ItemInstatiator {
     try {
       return targetClass.newInstance();
     } catch (InstantiationException e) {
-      throw new RuntimeException(e);
+      throw new InvalidTargetTypeException(COULD_NOT_INSTANTIATE_MESSAGE);
     } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
+      throw new InvalidTargetTypeException(e);
     }
   }
 
