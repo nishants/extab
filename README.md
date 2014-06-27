@@ -4,7 +4,7 @@ This is an API to map tables in excel files to java objects. It uses Apache POI 
 based mapping of objects to table rows.
 
 
-#Reading a file
+###Reading a file
 
 ####1. Create a model class
 
@@ -41,20 +41,20 @@ based mapping of objects to table rows.
 	|Vessa Hoe	|3360	|Kyapatabad	|11-01-12	|43|
 
 #### 3. Read file
-	```java
+	``` java
 	 List<Employee> parsed = ExcelTableReader.read("/Users/batman/data/Employee.xlsx", Employee.class);
 
 ##### @ExcelColumn
-> It maps a setter method or field with particular columns in the excel tables.
+  It maps a setter method or field with particular columns in the excel tables.
   Examples :
 
-> 1. **@ExcelColumn(order = 1, type = STRING)** 
-> ..* Maps the field to the first column(one based index) in the excel table. 
-> ..* All values in the column are expected to be of type text.
+  1. **@ExcelColumn(order = 1, type = STRING)**
+  ..* Maps the field to the first column(one based index) in the excel table.
+  ..* All values in the column are expected to be of type text.
 
-> 2. **@ExcelColumn(order = 4, type = DATE, format = "MM/dd/yyyy")** 
-> ..* Maps the field to the fourth column(one based index) in the excel table. 
-> ..* All values in the column are expected to be of type date, formatted as "MM/dd/yyyy".
-> ..* For valid patterns of date formats refer java.text.SimpeDateFormat.
+  2. **@ExcelColumn(order = 4, type = DATE, format = "MM/dd/yyyy")**
+  ..* Maps the field to the fourth column(one based index) in the excel table.
+  ..* All values in the column are expected to be of type date, formatted as "MM/dd/yyyy".
+  ..* For valid patterns of date formats refer java.text.SimpeDateFormat.
 
 
