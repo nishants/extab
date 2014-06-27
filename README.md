@@ -38,18 +38,16 @@ based mapping of objects to table rows.
 	|Vessa Hoe	  |3360	|Kyapatabad	|11-01-12	|43     |
 
 #### 3. Read file
-  ``` 
-  List<Employee> parsed = ExcelTableReader.read("/Users/batman/data/Employee.xlsx", Employee.class);
-  ```
+    List<Employee> parsed = ExcelTableReader.read("/Users/batman/data/Employee.xlsx", Employee.class);
 
 ##### ExcelColumn
 	It maps a setter method or field with particular columns in the excel tables.
  
 	@ExcelColumn(order = 1, type = STRING)
-		a. Maps the field to the first column(one based index) in the excel table.
+		a. Maps the field/setter to the first column(one based index) in the excel table.
   		b. All values in the column are expected to be of type text.
 
   	@ExcelColumn(order = 4, type = DATE, format = "MM/dd/yyyy")
-  		a. Maps the field to the fourth column(one based index) in the excel table.
+  		a. Maps the field/setter to the fourth column(one based index) in the excel table.
   		b. All values in the column are expected to be of type date, formatted as "MM/dd/yyyy".
-  		c.For valid patterns of date formats refer java.text.SimpeDateFormat.
+  		c. For valid patterns of date formats refer java.text.SimpeDateFormat.
