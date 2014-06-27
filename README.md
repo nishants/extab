@@ -43,6 +43,7 @@ based mapping of objects to table rows.
 #### 3. Read file
 	``` java
 	 List<Employee> parsed = ExcelTableReader.read("/Users/batman/data/Employee.xlsx", Employee.class);
+	 ```
 
 ##### @ExcelColumn
   It maps a setter method or field with particular columns in the excel tables.
