@@ -8,7 +8,7 @@ based mapping of objects to table rows.
 
 ####1. Create a model class
 
-   ``` java
+  ``` java
 	public class Employee {
 	  @ExcelColumn(order = 1, type = STRING)
 	  private String name;
@@ -32,14 +32,15 @@ based mapping of objects to table rows.
 	  @RowNum
 	  private int itemRowNumber;
 	}
+	```
 
-####2. Create an excel file with following data 
+#### 2. Create an excel file with following data
 	|Joe Hoe	  |420	|Lapatabad	|28-02-13	|83.435|
 	|Woe Hoe	  |840	|Kyapatabad	|01-12-09	|75.432|
 	|Jessa Hoe	|1680	|Napatabad	|31-01-13	|114.232|
 	|Vessa Hoe	|3360	|Kyapatabad	|11-01-12	|43|
 
-####3. Read file 
+#### 3. Read file
 	```java
 	 List<Employee> parsed = ExcelTableReader.read("/Users/batman/data/Employee.xlsx", Employee.class);
 
