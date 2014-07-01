@@ -24,7 +24,7 @@ public enum ExcelFileType {
       return workbook;
     }
   };
-  public static ExcelFileType getFileType(String fileName){
+  public static ExcelFileType fileTypeOf(String fileName){
     if(fileName == null || fileName.length()==0) throw new IllegalArgumentException("File name cant be null or empty.");
 
     int extensionBeginIndex = fileName.lastIndexOf(".")+1;

@@ -20,8 +20,8 @@ public class ExcelFileTypeTest {
 
   @Test
   public void shouldReturnCorrectFileType(){
-    assertThat(ExcelFileType.getFileType("/some/place/some-file.xls"), is(ExcelFileType.XLS));
-    assertThat(ExcelFileType.getFileType("/some/place/some-file.xlsx"), is(ExcelFileType.XLSX));
+    assertThat(ExcelFileType.fileTypeOf("/some/place/some-file.xls"), is(ExcelFileType.XLS));
+    assertThat(ExcelFileType.fileTypeOf("/some/place/some-file.xlsx"), is(ExcelFileType.XLSX));
   }
 
   @Test
@@ -42,18 +42,18 @@ public class ExcelFileTypeTest {
 
   @Test
   public void shouldReturnXLSXFileTypeIfFilenameHasNoExtension(){
-    assertThat(ExcelFileType.getFileType("/some/place/some-file-with-no-extension"), is(ExcelFileType.XLSX));
+    assertThat(ExcelFileType.fileTypeOf("/some/place/some-file-with-no-extension"), is(ExcelFileType.XLSX));
   }
 
   @Test
   public void shouldThrowIllegalArgumentExceptionIfFileNameIsEmpty(){
     thrown.expect(IllegalArgumentException.class);
-    ExcelFileType.getFileType("");
+    ExcelFileType.fileTypeOf("");
   }
 
   @Test
   public void shouldThrowIllegalArgumentExceptionIfFileNameIsNull(){
     thrown.expect(IllegalArgumentException.class);
-    ExcelFileType.getFileType(null);
+    ExcelFileType.fileTypeOf(null);
   }
 }
