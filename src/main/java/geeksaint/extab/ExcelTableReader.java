@@ -26,7 +26,7 @@ public class ExcelTableReader<T> {
     this.rowReader = rowReader;
   }
 
-  protected List<T> readDocument() {
+  public List<T> read() {
     List<T> values = new ArrayList<T>();
     Sheet sheet = workBook.getSheetAt(0);
     Iterator<Row> rowIterator = sheet.rowIterator();
@@ -37,41 +37,12 @@ public class ExcelTableReader<T> {
     return values;
   }
 
-  private void skipRows(int rowsToSkip, Iterator<Row> rowIterator) {
-    for (int i = 0; (i < rowsToSkip) && rowIterator.hasNext(); i++) {
+  private void skipRows(int rowsToSkip,
+                        Iterator<Row> rowIterator) {
+    for (int i = 0;
+         (i < rowsToSkip) && rowIterator.hasNext();
+         i++) {
       rowIterator.next();
     }
-  }
-
-  public static <T> List<T> read(String fileName, Class<T> rowType) throws IOException {
-    Workbook workBook = fileTypeOf(fileName).getWorkbook(new FileInputStream(fileName));
-    RowDefinition rowDefinition = new RowDefinition(rowType, new AnnotationProcessor());
-    ExcelRowReader<T> rowReader = new ExcelRowReader<T>(rowDefinition, new ItemInstatiator(rowType));
-
-    return (new ExcelTableReader<T>(workBook, rowReader, rowDefinition)).readDocument();
-  }
-
-  public static <T> List<T> readXls(InputStream inputStream, Class<T> rowType) throws IOException {
-    Workbook workBook = XLS.getWorkbook(inputStream);
-    RowDefinition rowDefinition = definitionFor(rowType);
-    ExcelRowReader<T> rowReader = new ExcelRowReader<T>(rowDefinition, new ItemInstatiator(rowType));
-
-    return (new ExcelTableReader<T>(workBook, rowReader, rowDefinition)).readDocument();
-  }
-
-  public static <T> List<T> readXlsx(InputStream inputStream, Class<T> rowType) throws IOException {
-    Workbook workBook = XLSX.getWorkbook(inputStream);
-    RowDefinition rowDefinition = new RowDefinition(rowType, new AnnotationProcessor());
-    ExcelRowReader<T> rowReader = new ExcelRowReader<T>(rowDefinition, instatiatorOf(rowType));
-
-    return (new ExcelTableReader<T>(workBook, rowReader, rowDefinition)).readDocument();
-  }
-
-  private static <T> ItemInstatiator instatiatorOf(Class<T> rowType) {
-    return new ItemInstatiator(rowType);
-  }
-
-  private static <T> RowDefinition definitionFor(Class<T> rowType) {
-    return new RowDefinition(rowType, new AnnotationProcessor());
   }
 }

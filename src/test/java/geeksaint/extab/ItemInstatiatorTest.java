@@ -33,6 +33,9 @@ public class ItemInstatiatorTest {
     @ExcelColumn(order=1)
     private void setSomething(String arg){something = arg;}
 
+    @RowNum
+    private int rowNum;
+
     public String getSomething(){
       return something;
     }
@@ -61,43 +64,11 @@ public class ItemInstatiatorTest {
   }
 
   @Test
-  public void shouldCreateLineItemWithValues(){
-    Map<Integer, List> rowValues = new HashMap<Integer, List>();
-    List itemOne = new ArrayList();
-    itemOne.add(0, "program#1");
-
-    List itemTwo = new ArrayList();
-    itemTwo.add(0, "program#2");
-
-    rowValues.put(0, itemOne);
-    rowValues.put(1, itemTwo);
-
-    List<LineItem> createdItems = instatiator.createItems(rowValues);
-
-    LineItem lineItemOne = createdItems.get(0);
-    LineItem lineItemTwo = createdItems.get(1);
-
-    assertThat(lineItemOne.getFieldOne(), is("program#1"));
-    assertThat(lineItemTwo.getFieldOne(), is("program#2"));
-  }
-
-  @Test
-  public void shouldInvokeSetters(){
-    ItemWithSetter expected = new ItemWithSetter();
-    expected.setSomething("something something");
-    ItemInstatiator instatiator = new ItemInstatiator(ItemWithSetter.class);
-
-    ItemWithSetter created = (ItemWithSetter) instatiator.createItem(asList("something something"));
-
-    assertThat(created, is(expected));
-  }
-
-  @Test
-  public void shouldSetRowNum(){
+  public void shouldSetRowNumAndFieldValues(){
     List itemValues = new ArrayList();
     itemValues.add(0, "some-value");
 
-    LineItem createdItem = (LineItem)instatiator.createItem(itemValues,101);
+    LineItem createdItem = (LineItem)instatiator.createItem(itemValues, 101);
 
     assertThat(createdItem.getFieldOne(), is("some-value"));
     assertThat(createdItem.getRowNumberInSheet(), is(101));

@@ -68,7 +68,7 @@ public class EndToEndTest {
     InputStream inputStream = getClass().getResourceAsStream(allStringsPersonFileXLS);
     List<Person> items = asList(personOne, personTwo, personThree);
 
-    List<Person> parsed = ExcelTableReader.readXls(inputStream, Person.class);
+    List<Person> parsed = ExTab.readXls(inputStream, Person.class);
 
     assertThat(parsed, is(items));
   }
@@ -82,7 +82,7 @@ public class EndToEndTest {
 
     InputStream inputStream = getClass().getResourceAsStream(allStringsPersonFileXLSX);
 
-    List<Person> parsed = ExcelTableReader.readXlsx(inputStream, Person.class);
+    List<Person> parsed = ExTab.readXlsx(inputStream, Person.class);
 
     assertThat(parsed, is(items));
   }
@@ -96,7 +96,7 @@ public class EndToEndTest {
 
     InputStream inputStream = getClass().getResourceAsStream(allStringsPersonSkipFileXLS);
 
-    List<PersonSkip> parsed = ExcelTableReader.readXls(inputStream, PersonSkip.class);
+    List<PersonSkip> parsed = ExTab.readXls(inputStream, PersonSkip.class);
 
     assertThat(parsed, is(items));
   }
@@ -106,7 +106,7 @@ public class EndToEndTest {
     InputStream inputStream = getClass().getResourceAsStream(allStringsManyPersonFileXLSX);
 
     long beginTime = getTimeInMillis();
-    List<Person> parsed = ExcelTableReader.readXlsx(inputStream, Person.class);
+    List<Person> parsed = ExTab.readXlsx(inputStream, Person.class);
     long timeTaken = getTimeInMillis() - beginTime;
 
     assert timeTaken < 5000l : format("Time taken to parse was %d ms, more than 5 seconds ", timeTaken);
@@ -122,7 +122,7 @@ public class EndToEndTest {
     Person expected = new Person("Mr Singh", "27", parseDate("02/28/2014"));
 
     InputStream inputStream = getClass().getResourceAsStream(personsFileWithDateAndNumberFormats);
-    List<Person> parsed = ExcelTableReader.readXls(inputStream, Person.class);
+    List<Person> parsed = ExTab.readXls(inputStream, Person.class);
 
     assertThat(parsed.get(0), is(expected));
   }

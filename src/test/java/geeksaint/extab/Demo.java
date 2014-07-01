@@ -26,7 +26,7 @@ public class Demo {
     InputStream inputStream = getClass().getResourceAsStream(demoExcelFile);
     List<Employee> items = asList(employeeOne, employeeTwo, employeeThree, employeeFour);
 
-    List<Employee> parsed = ExcelTableReader.readXlsx(inputStream, Employee.class);
+    List<Employee> parsed = ExTab.readXlsx(inputStream, Employee.class);
 
     assertThat(parsed, is(items));
   }

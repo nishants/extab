@@ -25,22 +25,6 @@ public class ItemInstatiator {
     rowNumField = getRowNumField();
   }
 
-  public List createItems(Map<Integer, List> rows) {
-    List createdItems = new ArrayList();
-    for(int rowNum : rows.keySet()){
-      List rowValues = rows.get(rowNum);
-      createdItems.add(rowNum, createItem(rowValues));
-    }
-    return createdItems;
-  }
-
-  public Object createItem(List rowValues) {
-    Object item = createNewInstance();
-    setFieldValues(rowValues, item);
-    invokeMethods(rowValues, item);
-    return item;
-  }
-
   //Row number is a one based index( as excel follows the same)
   public Object createItem(List rowValues, int rowNumber) {
     Object item = createNewInstance();
@@ -51,9 +35,13 @@ public class ItemInstatiator {
   }
 
   private void setRowNumber(Object item, Integer value){
-    if(rowNumField != null){
+    if(rowNumFieldExists()){
       setFieldValue(item, rowNumField, value);
     }
+  }
+
+  private boolean rowNumFieldExists() {
+    return rowNumField != null;
   }
 
   private Field getRowNumField(){

@@ -66,7 +66,7 @@ public class ExcelTableReaderTest {
 
     excelTableReader = new ExcelTableReader<Item>(workbook, rowReader, rowDefinition);
 
-    assertThat(excelTableReader.readDocument(), is(asList(itemOne, itemTwo)));
+    assertThat(excelTableReader.read(), is(asList(itemOne, itemTwo)));
   }
 
   @Test
@@ -78,7 +78,7 @@ public class ExcelTableReaderTest {
 
     excelTableReader = new ExcelTableReader<Item>(workbook, rowReader, rowDefinition);
 
-    assertThat(excelTableReader.readDocument(), is(asList(itemThree, itemFour)));
+    assertThat(excelTableReader.read(), is(asList(itemThree, itemFour)));
   }
 
   @Test
@@ -90,6 +90,6 @@ public class ExcelTableReaderTest {
 
     excelTableReader = new ExcelTableReader<Item>(workbook, rowReader, rowDefinition);
 
-    assertThat(excelTableReader.readDocument(), is(Collections.EMPTY_LIST ));
+    assertThat(excelTableReader.read(), is(Collections.EMPTY_LIST ));
   }
 }
