@@ -4,9 +4,59 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>ExTab</groupId>
+  <groupId>com.geeksaint</groupId>
   <artifactId>ExTab</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>Extab</name>
+  <description>POI based API for mapping java objects to excel tables</description>
+
+  <scm>
+    <url>https://github.com/lkrnac/patere</url>
+    <connection>scm:git:github.com/nishants/extab.git</connection>
+    <developerConnection>scm:git:github.com/nishants/extab.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+
+
+ <developers>
+    <developer>
+      <id>nishants</id>
+      <name>Anthony Whitford</name>
+      <email>nishant.singh87@gmail.com</email>
+    </developer>
+  </developers>
+
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>9</version>
+  </parent>
+
+  <licenses>
+    <license>
+      <name>Do What the Fuck You Want to Public License</name>
+      <url>http://www.wtfpl.net/</url>
+      <distribution>maven central repo</distribution>
+    </license>
+  </licenses>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <version>1.5</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.4.2</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 
   <dependencies>
     <dependency>
