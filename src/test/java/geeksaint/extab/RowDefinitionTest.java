@@ -25,30 +25,30 @@ public class RowDefinitionTest {
     }
 
     AnnotationProcessor annotationProcessor = mock(AnnotationProcessor.class);
-    when(annotationProcessor.getFieldColumnType(TestClass.class, "columnOne")).thenReturn(ExcelColumnType.STRING);
-    when(annotationProcessor.getFieldColumnOrder(TestClass.class, "columnOne")).thenReturn(1);
-    when(annotationProcessor.getFieldColumnFormat(TestClass.class, "columnOne")).thenReturn("");
+    when(annotationProcessor.getFieldColumnType("columnOne")).thenReturn(ExcelColumnType.STRING);
+    when(annotationProcessor.getFieldColumnOrder("columnOne")).thenReturn(1);
+    when(annotationProcessor.getFieldColumnFormat("columnOne")).thenReturn("");
 
-    when(annotationProcessor.getFieldColumnType(TestClass.class, "columnTwo")).thenReturn(ExcelColumnType.STRING);
-    when(annotationProcessor.getFieldColumnOrder(TestClass.class, "columnTwo")).thenReturn(2);
-    when(annotationProcessor.getFieldColumnFormat(TestClass.class, "columnTwo")).thenReturn("");
-
-
-    when(annotationProcessor.getFieldColumnType(TestClass.class, "columnThree")).thenReturn(ExcelColumnType.STRING);
-    when(annotationProcessor.getFieldColumnOrder(TestClass.class, "columnThree")).thenReturn(3);
-    when(annotationProcessor.getFieldColumnFormat(TestClass.class, "columnThree")).thenReturn("");
+    when(annotationProcessor.getFieldColumnType("columnTwo")).thenReturn(ExcelColumnType.STRING);
+    when(annotationProcessor.getFieldColumnOrder("columnTwo")).thenReturn(2);
+    when(annotationProcessor.getFieldColumnFormat("columnTwo")).thenReturn("");
 
 
-    when(annotationProcessor.getFieldColumnType(TestClass.class, "columnFour")).thenReturn(ExcelColumnType.STRING);
-    when(annotationProcessor.getFieldColumnOrder(TestClass.class, "columnFour")).thenReturn(4);
-    when(annotationProcessor.getFieldColumnFormat(TestClass.class, "columnFour")).thenReturn("");
+    when(annotationProcessor.getFieldColumnType("columnThree")).thenReturn(ExcelColumnType.STRING);
+    when(annotationProcessor.getFieldColumnOrder("columnThree")).thenReturn(3);
+    when(annotationProcessor.getFieldColumnFormat("columnThree")).thenReturn("");
 
-    when(annotationProcessor.getMethodColumnType(TestClass.class, "aMethod")).thenReturn(ExcelColumnType.DATE);
-    when(annotationProcessor.getMethodColumnOrder(TestClass.class, "aMethod")).thenReturn(5);
-    when(annotationProcessor.getMethodColumnFormat(TestClass.class, "aMethod")).thenReturn("MM/dd/yyyy");
 
-    when(annotationProcessor.getSkipRows(TestClass.class)).thenReturn(3);
-    when(annotationProcessor.getSkipColumns(TestClass.class)).thenReturn(1);
+    when(annotationProcessor.getFieldColumnType("columnFour")).thenReturn(ExcelColumnType.STRING);
+    when(annotationProcessor.getFieldColumnOrder("columnFour")).thenReturn(4);
+    when(annotationProcessor.getFieldColumnFormat("columnFour")).thenReturn("");
+
+    when(annotationProcessor.getMethodColumnType("aMethod")).thenReturn(ExcelColumnType.DATE);
+    when(annotationProcessor.getMethodColumnOrder("aMethod")).thenReturn(5);
+    when(annotationProcessor.getMethodColumnFormat("aMethod")).thenReturn("MM/dd/yyyy");
+
+    when(annotationProcessor.getSkipRows()).thenReturn(3);
+    when(annotationProcessor.getSkipColumns()).thenReturn(1);
 
     RowDefinition rowDefinition = new RowDefinition(TestClass.class, annotationProcessor) ;
 
@@ -68,8 +68,8 @@ public class RowDefinitionTest {
   public void shouldHaveSkipValues(){
     class TestSkipClass{}
     AnnotationProcessor annotationProcessor = mock(AnnotationProcessor.class);
-    when(annotationProcessor.getSkipRows(TestSkipClass.class)).thenReturn(3);
-    when(annotationProcessor.getSkipColumns(TestSkipClass.class)).thenReturn(1);
+    when(annotationProcessor.getSkipRows()).thenReturn(3);
+    when(annotationProcessor.getSkipColumns()).thenReturn(1);
 
     RowDefinition rowDefinition = new RowDefinition(TestSkipClass.class, annotationProcessor) ;
 

@@ -7,13 +7,15 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import static geeksaint.extab.AnnotationProcessor.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class AnnotationProcessorTest {
 
-  private AnnotationProcessor processor;
+  private AnnotationProcessor processorForLineItem;
+  private AnnotationProcessor processorForLineItemWithBadFields;
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
@@ -38,76 +40,78 @@ public class AnnotationProcessorTest {
 
   @Before
   public void setUp() throws Exception {
-    processor = new AnnotationProcessor();
+    processorForLineItem = process(LineItem.class);
+    processorForLineItemWithBadFields = process(LineItemWithBadFields.class);
   }
 
   @Test
   public void shouldReadOffsets(){
-    assertThat(processor.getSkipRows( LineItem.class), is(2));
-    assertThat(processor.getSkipColumns( LineItem.class), is(3));
+    assertThat(processorForLineItem.getSkipRows(), is(2));
+    assertThat(processorForLineItem.getSkipColumns(), is(3));
   }
 
   @Test
   public void shouldThrowExceptionIfTargetClassNotAnnotatedForName(){
     thrown.expect(PointAnnotationNotFoundException.class);
-    processor.getTableName(java.lang.String.class);
+    process(String.class).getTableName();
   }
 
   @Test
   public void shouldReadName(){
-    assertThat(processor.getTableName( LineItem.class), is(" LineItem"));
+    assertThat(processorForLineItem.getTableName(), is(" LineItem"));
   }
 
   @Test
   public void shouldReadComments(){
-    assertThat(processor.getTableComments( LineItem.class), is("A line item"));
+    assertThat(processorForLineItem.getTableComments(), is("A line item"));
   }
 
   @Test
   public void shouldReadFieldAnnotations() throws NoSuchFieldException {
-    assertThat(processor.getFieldColumnOrder( LineItem.class, "fieldOne"), is(1));
-    assertThat(processor.getFieldColumnType( LineItem.class, "fieldOne"), is(ExcelColumnType.STRING));
+    assertThat(processorForLineItem.getFieldColumnOrder("fieldOne"), is(1));
+    assertThat(processorForLineItem.getFieldColumnType("fieldOne"), is(ExcelColumnType.STRING));
   }
   @Test
   public void shouldReadMethodAnnotations() throws NoSuchFieldException {
-    assertThat(processor.getMethodColumnOrder( LineItem.class, "setFieldTwo"), is(2));
-    assertThat(processor.getMethodColumnType( LineItem.class, "setFieldTwo"), is(ExcelColumnType.STRING));
+    assertThat(processorForLineItem.getMethodColumnOrder("setFieldTwo"), is(2));
+    assertThat(processorForLineItem.getMethodColumnType("setFieldTwo"), is(ExcelColumnType.STRING));
   }
 
 //  @Test
 //  public void shouldThrowExceptionIfTargetMethodDoesNotHaveOnlyOneStringArgument(){
 //    thrown.expect(InvalidPointAnnotationException.class);
-//    processor.getMethodColumnOrder( LineItemWithBadFields.class, "aBadMethod");
+//    processorForLineItem.getMethodColumnOrder( LineItemWithBadFields.class, "aBadMethod");
 //  }
 
 //  @Test
 //  public void shouldThrowExceptionIfTargetMethodDoesNotHaveAStringArgument(){
 //    thrown.expect(InvalidPointAnnotationException.class);
-//    processor.getMethodColumnOrder( LineItemWithBadFields.class, "anotherBadMethod");
+//    processorForLineItem.getMethodColumnOrder( LineItemWithBadFields.class, "anotherBadMethod");
 //  }
 
   @Test
   public void shouldReturnNullIfTheFieldIsNotAnnotated() throws NoSuchFieldException {
-    assertThat(processor.getFieldColumnOrder( LineItemWithBadFields.class, "badField"), is(nullValue()));
-    assertThat(processor.getFieldColumnType( LineItemWithBadFields.class, "badField"), is(nullValue()));
+    assertThat(processorForLineItemWithBadFields.getFieldColumnOrder("badField"), is(nullValue()));
+    assertThat(processorForLineItemWithBadFields.getFieldColumnType("badField"), is(nullValue()));
   }
 
   @Test
   public void shouldReadColumnFormatType() throws NoSuchFieldException {
-    assertThat(processor.getFieldColumnFormat(LineItem.class, "fieldOne"), is("some format"));
-    assertThat(processor.getMethodColumnFormat(LineItem.class, "setFieldTwo"), is("other format"));
+    assertThat(processorForLineItem.getFieldColumnFormat("fieldOne"), is("some format"));
+    assertThat(processorForLineItem.getMethodColumnFormat("setFieldTwo"), is("other format"));
   }
 
   @Test
   public void shouldReturnNullIfTheMethodIsNotAnnotated() throws NoSuchFieldException {
-    assertThat(processor.getMethodColumnOrder(LineItemWithBadFields.class, "badMethod"), is(nullValue()));
-    assertThat(processor.getMethodColumnType(LineItemWithBadFields.class, "badMethod"), is(nullValue()));
+    assertThat(processorForLineItem.getMethodColumnOrder("badMethod"), is(nullValue()));
+    assertThat(processorForLineItem.getMethodColumnType("badMethod"), is(nullValue()));
   }
 
   @Test
   public void shouldReturnZeroRowsAndColumnsToSkipIfClassIsNotAnnotated(){
     class NotAnnotatedClass{}
-    assertThat(processor.getSkipRows( NotAnnotatedClass.class), is(0));
-    assertThat(processor.getSkipColumns( NotAnnotatedClass.class), is(0));
+    AnnotationProcessor processor = process(NotAnnotatedClass.class);
+    assertThat(processor.getSkipRows(), is(0));
+    assertThat(processor.getSkipColumns(), is(0));
   }
 }

@@ -9,7 +9,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import static geeksaint.extab.AnnotationProcessor.*;
 
 public class ItemInstatiator {
   private static final String COULD_NOT_INSTANTIATE_MESSAGE = "Please ensure the target class has public default constructor and is not abstract type";
@@ -21,7 +22,7 @@ public class ItemInstatiator {
 
   public ItemInstatiator(Class targetClass) {
     this.targetClass = targetClass;
-    processor = new AnnotationProcessor();
+    processor = process(targetClass);
     rowNumField = getRowNumField();
   }
 
@@ -98,14 +99,14 @@ public class ItemInstatiator {
 
   private int getFieldOrder(String fieldName){
     try {
-      return processor.getFieldColumnOrder(targetClass, fieldName);
+      return processor.getFieldColumnOrder(fieldName);
     } catch (NoSuchFieldException e) {
       throw new RuntimeException(e);
     }
   }
 
   private int getMethodOrder(String methodName) {
-      return processor.getMethodColumnOrder(targetClass, methodName);
+      return processor.getMethodColumnOrder(methodName);
   }
 
   private synchronized List<Method> getAnnotatedMethods() {

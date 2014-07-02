@@ -1,82 +1,85 @@
 package geeksaint.extab;
 
-import geeksaint.extab.exceptions.InvalidPointAnnotationException;
 import geeksaint.extab.exceptions.PointAnnotationNotFoundException;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import static java.lang.String.format;
 
 public class AnnotationProcessor {
+  private final Class claz;
 
-  private static final String INVALID_METHOD_SIGNATURE_MESSAGE =
-      "Method '%1$s' must have only one String argument.Expected method with " +
-          "signature '%1$s(String arg)'";
+  public static AnnotationProcessor process(Class claz){
+    return new AnnotationProcessor(claz);
+  }
+  private AnnotationProcessor(Class claz) {
+    this.claz = claz;
+  }
 
-  public String getTableName(Class claz){
-    ExcelTable annotation = getTableAnnotation(claz);
+
+  public String getTableName(){
+    ExcelTable annotation = getTableAnnotation();
     return annotation.name();
   }
 
-  public String getTableComments(Class claz) {
-    ExcelTable annotation = getTableAnnotation(claz);
+  public String getTableComments() {
+    ExcelTable annotation = getTableAnnotation();
     return annotation.comments();
   }
 
-  public Integer getSkipRows(Class claz) {
+  public Integer getSkipRows() {
     ExcelTable annotation = null;
     try{
-    annotation = getTableAnnotation(claz);
+    annotation = getTableAnnotation();
     }catch(PointAnnotationNotFoundException e){
       return 0;
     }
     return annotation.skipRows();
   }
 
-  public Integer getSkipColumns(Class claz) {
+  public Integer getSkipColumns() {
     ExcelTable annotation = null;
     try{
-      annotation = getTableAnnotation(claz);
+      annotation = getTableAnnotation();
     }catch(PointAnnotationNotFoundException e){
       return 0;
     }
     return annotation.skipColumns();
   }
 
-  public Integer getFieldColumnOrder(Class claz, String fieldName) throws NoSuchFieldException {
-    ExcelColumn columnAnnotation = getColumnAnnotationOnField(claz, fieldName);
+  public Integer getFieldColumnOrder(String fieldName) throws NoSuchFieldException {
+    ExcelColumn columnAnnotation = getColumnAnnotationOnField(fieldName);
     return (columnAnnotation == null) ? null : columnAnnotation.order();
   }
 
-  public Integer getMethodColumnOrder(Class claz, String methodName) {
-    ExcelColumn columnAnnotation = getColumnAnnotationOnMethod(claz, methodName);
+  public Integer getMethodColumnOrder(String methodName) {
+    ExcelColumn columnAnnotation = getColumnAnnotationOnMethod(methodName);
     return (columnAnnotation == null) ? null : columnAnnotation.order();
   }
 
-  public ExcelColumnType getFieldColumnType(Class claz, String fieldName) throws NoSuchFieldException {
-    ExcelColumn columnAnnotation = getColumnAnnotationOnField(claz, fieldName);
+  public ExcelColumnType getFieldColumnType(String fieldName) throws NoSuchFieldException {
+    ExcelColumn columnAnnotation = getColumnAnnotationOnField(fieldName);
     return (columnAnnotation == null) ? null : columnAnnotation.type();
   }
 
-  public ExcelColumnType getMethodColumnType(Class claz, String methodName) {
-    ExcelColumn columnAnnotation = getColumnAnnotationOnMethod(claz, methodName);
+  public ExcelColumnType getMethodColumnType(String methodName) {
+    ExcelColumn columnAnnotation = getColumnAnnotationOnMethod(methodName);
     return (columnAnnotation == null) ? null : columnAnnotation.type();
   }
 
-  private ExcelTable getTableAnnotation(Class claz) {
+  private ExcelTable getTableAnnotation() {
     ExcelTable annotation = (ExcelTable) claz.getAnnotation(ExcelTable.class);
     if(annotation == null) throw new PointAnnotationNotFoundException();;
     return annotation;
   }
 
-  private ExcelColumn getColumnAnnotationOnField(Class claz, String fieldName) throws NoSuchFieldException {
+  private ExcelColumn getColumnAnnotationOnField(String fieldName) throws NoSuchFieldException {
     Field field = claz.getDeclaredField(fieldName);
     return getAnnotationOn(field);
   }
 
-  private ExcelColumn getColumnAnnotationOnMethod(Class claz, String methodName) {
+  private ExcelColumn getColumnAnnotationOnMethod(String methodName) {
     Method method = null;
     try {
       method = claz.getDeclaredMethod(methodName, String.class);
@@ -91,17 +94,13 @@ public class AnnotationProcessor {
     return annotation;
   }
 
-  private void throwInvalidException(String messageFormat, Object params) {
-    throw new InvalidPointAnnotationException(format(messageFormat, params));
-  }
-
-  public String getFieldColumnFormat(Class claz, String fieldName) throws NoSuchFieldException {
-    ExcelColumn columnAnnotation = getColumnAnnotationOnField(claz, fieldName);
+  public String getFieldColumnFormat(String fieldName) throws NoSuchFieldException {
+    ExcelColumn columnAnnotation = getColumnAnnotationOnField(fieldName);
     return (columnAnnotation == null) ? null : columnAnnotation.format();
   }
 
-  public String getMethodColumnFormat(Class claz, String methodName) {
-      ExcelColumn columnAnnotation = getColumnAnnotationOnMethod(claz, methodName);
+  public String getMethodColumnFormat(String methodName) {
+      ExcelColumn columnAnnotation = getColumnAnnotationOnMethod(methodName);
       return (columnAnnotation == null) ? null : columnAnnotation.format();
   }
 }

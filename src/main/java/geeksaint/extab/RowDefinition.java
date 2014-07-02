@@ -21,8 +21,8 @@ public class RowDefinition {
   public RowDefinition(Class rowType, AnnotationProcessor annotationProcessor){
     this.annotationProcessor = annotationProcessor;
     this.rowType = rowType;
-    rowsToSkip = annotationProcessor.getSkipRows(rowType);
-    columnsToSkip = annotationProcessor.getSkipColumns(rowType);
+    rowsToSkip = annotationProcessor.getSkipRows();
+    columnsToSkip = annotationProcessor.getSkipColumns();
   }
 
   public ColumnDefinition[] getRowDefinition() {
@@ -37,9 +37,9 @@ public class RowDefinition {
     List<ColumnDefinition> columnDefinitions = new ArrayList<ColumnDefinition>();
     for(Field field : rowType.getDeclaredFields()){
       try {
-        ExcelColumnType excelColumnType = annotationProcessor.getFieldColumnType(rowType, field.getName());
-        Integer order = annotationProcessor.getFieldColumnOrder(rowType, field.getName());
-        String format = annotationProcessor.getFieldColumnFormat(rowType, field.getName());
+        ExcelColumnType excelColumnType = annotationProcessor.getFieldColumnType(field.getName());
+        Integer order = annotationProcessor.getFieldColumnOrder(field.getName());
+        String format = annotationProcessor.getFieldColumnFormat(field.getName());
         if(excelColumnType != null && order != null){
           columnDefinitions.add(toColumnDefinition(order, excelColumnType, format));
         }
@@ -51,9 +51,9 @@ public class RowDefinition {
   private List<ColumnDefinition> getColumnMethods() {
     List<ColumnDefinition> columnDefinitions = new ArrayList<ColumnDefinition>();
     for (Method method : rowType.getDeclaredMethods()) {
-      ExcelColumnType excelColumnType = annotationProcessor.getMethodColumnType(rowType, method.getName());
-      Integer order = annotationProcessor.getMethodColumnOrder(rowType, method.getName());
-      String format = annotationProcessor.getMethodColumnFormat(rowType, method.getName());
+      ExcelColumnType excelColumnType = annotationProcessor.getMethodColumnType(method.getName());
+      Integer order = annotationProcessor.getMethodColumnOrder(method.getName());
+      String format = annotationProcessor.getMethodColumnFormat(method.getName());
       if (excelColumnType != null && order != null) {
         columnDefinitions.add(toColumnDefinition(order, excelColumnType, format));
       }
