@@ -3,7 +3,6 @@ ExTab
 This is an API to map tables in excel files to java objects. It uses Apache POI to parse the excel files and provide a JPA styled annotation 
 based mapping of objects to table rows.
 
-
 ###Reading a file
 
 ####1. Create a model class
